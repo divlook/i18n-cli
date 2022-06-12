@@ -24,7 +24,7 @@ export default () => ({
         ],
     },
     resolve: {
-        extensions: ['.ts'],
+        extensions: ['.ts', '.js', '.json'],
         alias: {
             '~': path.resolve(),
             '@': path.resolve('./src'),
