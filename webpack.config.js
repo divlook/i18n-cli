@@ -31,4 +31,5 @@ export default () => ({
         },
     },
     plugins: [new ESLintPlugin()],
+    stats: 'minimal',
 })
