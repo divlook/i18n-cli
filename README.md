@@ -30,6 +30,8 @@ npm run build # output: ./dist/i18n-cli.cjs
 
 ### Execute
 
+이 명령어는 `npm run build` 실행이 선행됩니다.
+
 ```bash
-npm run exec
+npm run exec # == node ./dist/i18n-cli.cjs
 ```
