@@ -1,6 +1,6 @@
 import { program } from 'commander'
 import packageJson from '~/package.json'
-import { OutputFormatEnum } from '~/src/types'
+import { CommandOption, OutputFormatEnum } from '~/src/types'
 
 program
     .name(`divlook-i18n`)
@@ -53,6 +53,13 @@ program
         `key 포맷입니다. 변수 \`key\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`[key]\`, \`[sheet_name].[key]\``,
         `[key]`
     )
+    .action((option: CommandOption) => {
+        if (!option.spreadsheetId && !option.input) {
+            program.error(
+                '`--spreadsheet-id`, `--input` 옵션 중 하나는 필수로 입력이 필요합니다.'
+            )
+        }
+    })
 
 program.parse(process.argv)
 
