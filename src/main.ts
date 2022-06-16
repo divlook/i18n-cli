@@ -1,6 +1,7 @@
 import { program } from 'commander'
 import packageJson from '~/package.json'
-import { CommandOption, OutputFormatEnum } from '~/src/types'
+import { CommandOption, OutputFormatEnum } from '@/global.type'
+import { checkFileExt } from '@/utils/global-lib'
 
 program
     .name(`divlook-i18n`)
@@ -54,11 +55,35 @@ program
         `[key]`
     )
     .action((option: CommandOption) => {
-        if (!option.spreadsheetId && !option.input) {
-            program.error(
-                '`--spreadsheet-id`, `--input` 옵션 중 하나는 필수로 입력이 필요합니다.'
-            )
+        if (option.spreadsheetId) {
+            return
         }
+
+        if (option.input) {
+            const ext = checkFileExt(option.input)
+
+            if (!ext.isSupported) {
+                program.error(`지원되지 않는 포맷의 파일입니다.`)
+            }
+
+            switch (ext.name) {
+                case 'xlsx': {
+                    //
+                    break
+                }
+
+                case 'csv': {
+                    //
+                    break
+                }
+            }
+
+            return
+        }
+
+        program.error(
+            `\`--spreadsheet-id\`, \`--input\` 옵션 중 하나는 필수로 입력이 필요합니다.`
+        )
     })
 
 program.parse(process.argv)

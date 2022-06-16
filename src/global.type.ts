@@ -15,5 +15,5 @@ export interface CommandOption {
     spreadsheetId?: string
     googleCredentials?: string
     googleToken?: string
-    keyFormat?: string
+    keyFormat: string
 }
