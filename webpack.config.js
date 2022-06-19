@@ -13,7 +13,7 @@ export default () => ({
             import: path.resolve('./src/main.ts'),
             dependOn: 'vendors',
         },
-        vendors: ['commander'],
+        vendors: ['commander', '@googleapis/sheets'],
     },
     output: {
         filename: '[name].cjs',
