@@ -1,7 +1,8 @@
 import { program } from 'commander'
 import packageJson from '~/package.json'
 import { CommandOption, OutputFormatEnum } from '@/global.type'
-import { checkFileExt } from '@/utils/global-lib'
+import { checkFileExt, UserError } from '@/utils/global-lib'
+import { SpreadsheetParser } from '@/parser/spreadsheet-parser'
 
 program
     .name(`divlook-i18n`)
@@ -41,7 +42,7 @@ program
     )
     .option(
         `--google-credentials <path>`,
-        `Google Sheets Node API credentials 파일의 경로`,
+        `Google Sheets Node API credentials 파일의 경로. 생성 방법 : https://developers.google.com/workspace/guides/create-credentials#desktop-app`,
         `./credentials.json`
     )
     .option(
@@ -54,36 +55,53 @@ program
         `key 포맷입니다. 변수 \`key\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`[key]\`, \`[sheet_name].[key]\``,
         `[key]`
     )
-    .action((option: CommandOption) => {
-        if (option.spreadsheetId) {
-            return
-        }
-
-        if (option.input) {
-            const ext = checkFileExt(option.input)
-
-            if (!ext.isSupported) {
-                program.error(`지원되지 않는 포맷의 파일입니다.`)
+    .action(async (option: CommandOption) => {
+        try {
+            if (option.spreadsheetId) {
+                await SpreadsheetParser.parse({
+                    sheetId: option.spreadsheetId,
+                    credentialsPath: option.googleCredentials,
+                    tokenPath: option.googleToken,
+                })
+                return
             }
 
-            switch (ext.name) {
-                case 'xlsx': {
-                    //
-                    break
+            if (option.input) {
+                const ext = checkFileExt(option.input)
+
+                if (!ext.isSupported) {
+                    program.error(`지원되지 않는 포맷의 파일입니다.`)
                 }
 
-                case 'csv': {
-                    //
-                    break
+                switch (ext.name) {
+                    case 'xlsx': {
+                        //
+                        break
+                    }
+
+                    case 'csv': {
+                        //
+                        break
+                    }
                 }
+
+                return
             }
 
-            return
-        }
+            program.error(
+                `\`--spreadsheet-id\`, \`--input\` 옵션 중 하나는 필수로 입력이 필요합니다.`
+            )
+        } catch (error) {
+            if (error instanceof UserError && error.message) {
+                program.error(error.message)
+            }
 
-        program.error(
-            `\`--spreadsheet-id\`, \`--input\` 옵션 중 하나는 필수로 입력이 필요합니다.`
-        )
+            if (error instanceof Error && error.message) {
+                program.error(error.message)
+            }
+
+            console.error(error)
+        }
     })
 
 program.parse(process.argv)

@@ -1,3 +1,5 @@
+import * as path from 'path'
+
 /**
  * TODO:
  */
@@ -25,4 +27,15 @@ export function checkFileExt(filename: string) {
     }
 
     return result(null)
+}
+
+export function workdir(...paths: string[]) {
+    return path.join(process.cwd(), ...paths)
+}
+
+export class UserError extends Error {
+    constructor(message?: string) {
+        super(message)
+        this.name = 'UserError'
+    }
 }
