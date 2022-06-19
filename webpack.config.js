@@ -8,9 +8,15 @@ import ESLintPlugin from 'eslint-webpack-plugin'
 export default () => ({
     mode: 'production',
     target: 'node',
-    entry: path.resolve('./src/main.ts'),
+    entry: {
+        'i18n-cli': {
+            import: path.resolve('./src/main.ts'),
+            dependOn: 'vendors',
+        },
+        vendors: ['commander'],
+    },
     output: {
-        filename: 'i18n-cli.cjs',
+        filename: '[name].cjs',
         path: path.resolve('./dist'),
         clean: true,
     },
