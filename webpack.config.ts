@@ -1,11 +1,8 @@
-// @ts-check
 import * as path from 'path'
+import { Configuration } from 'webpack'
 import ESLintPlugin from 'eslint-webpack-plugin'
 
-/**
- * @returns { import('webpack').Configuration }
- */
-export default () => ({
+const config: Configuration = {
     mode: 'production',
     target: 'node',
     entry: {
@@ -16,7 +13,7 @@ export default () => ({
         vendors: ['commander', '@googleapis/sheets'],
     },
     output: {
-        filename: '[name].cjs',
+        filename: '[name].js',
         path: path.resolve('./dist'),
         clean: true,
     },
@@ -24,7 +21,14 @@ export default () => ({
         rules: [
             {
                 test: /\.ts$/,
-                use: 'ts-loader',
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                        },
+                    },
+                ],
                 exclude: /node_modules/,
             },
         ],
@@ -38,4 +42,6 @@ export default () => ({
     },
     plugins: [new ESLintPlugin()],
     stats: 'minimal',
-})
+}
+
+export default config

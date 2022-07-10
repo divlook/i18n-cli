@@ -15,35 +15,34 @@
     "url": "https://github.com/divlook/i18n-cli/issues"
   },
   "homepage": "https://github.com/divlook/i18n-cli#readme",
-  "type": "module",
   "bin": {
-    "divlook-i18n": "./dist/i18n-cli.cjs"
+    "divlook-i18n": "./dist/i18n-cli.js"
   },
-  "main": "./dist/i18n-cli.cjs",
+  "main": "./dist/i18n-cli.js",
   "scripts": {
     "build": "webpack",
-    "exec": "npm run build && node ./dist/i18n-cli.cjs",
+    "exec": "npm run build && node ./dist/i18n-cli.js",
     "lint": "eslint --ignore-pattern *.test.ts --quiet src/*",
     "test": "jest",
     "test.watch": "jest --watch"
   },
   "devDependencies": {
-    "@googleapis/sheets": "^3.0.0",
-    "@types/jest": "^28.1.1",
-    "@types/node": "^17.0.40",
-    "@typescript-eslint/eslint-plugin": "^5.27.0",
-    "@typescript-eslint/parser": "^5.27.0",
+    "@googleapis/sheets": "^3.0.2",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^17.0.45",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "commander": "^9.3.0",
-    "eslint": "^8.17.0",
+    "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-webpack-plugin": "^3.1.1",
-    "jest": "^28.1.0",
-    "prettier": "^2.6.2",
-    "ts-jest": "^28.0.4",
-    "ts-loader": "^9.3.0",
-    "ts-node": "^10.8.1",
-    "typescript": "^4.7.3",
+    "eslint-webpack-plugin": "^3.2.0",
+    "jest": "^28.1.2",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "ts-loader": "^9.3.1",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4",
     "webpack": "^5.73.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.10.0"
   }
 }

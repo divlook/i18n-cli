@@ -25,7 +25,7 @@ npm run test.watch
 ### Build
 
 ```bash
-npm run build # output: ./dist/i18n-cli.cjs
+npm run build # output: ./dist/i18n-cli.js
 ```
 
 ### Execute
@@ -33,5 +33,5 @@ npm run build # output: ./dist/i18n-cli.cjs
 이 명령어는 `npm run build` 실행이 선행됩니다.
 
 ```bash
-npm run exec # == node ./dist/i18n-cli.cjs
+npm run exec # == node ./dist/i18n-cli.js
 ```
