@@ -1,8 +1,6 @@
 import * as path from 'path'
+import minimatch from 'minimatch'
 
-/**
- * TODO:
- */
 export function checkFileExt(filename: string) {
     const result = (ext: 'xlsx' | 'csv' | null) => {
         if (ext) {
@@ -38,4 +36,34 @@ export class UserError extends Error {
         super(message)
         this.name = 'UserError'
     }
+}
+
+export function textFilter(
+    input: string | string[],
+    pattern: string | null = null,
+    isInclude = true
+) {
+    const texts: string[] = []
+
+    if (Array.isArray(input)) {
+        texts.push(...input)
+    } else {
+        texts.push(input)
+    }
+
+    if (pattern === null) {
+        return texts
+    }
+
+    const patterns = new Set(pattern.split(',').map((row) => row.trim()))
+
+    return texts.filter((sheetName) => {
+        for (const pattern of patterns) {
+            if (minimatch(sheetName, pattern)) {
+                return isInclude
+            }
+        }
+
+        return !isInclude
+    })
 }

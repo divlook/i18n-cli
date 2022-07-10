@@ -10,7 +10,13 @@ const config: Configuration = {
             import: path.resolve('./src/main.ts'),
             dependOn: 'vendors',
         },
-        vendors: ['commander', '@googleapis/sheets'],
+        vendors: [
+            'commander',
+            '@googleapis/sheets',
+            'glob',
+            'minimatch',
+            'merge',
+        ],
     },
     output: {
         filename: '[name].js',

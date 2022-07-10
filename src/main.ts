@@ -9,8 +9,8 @@ program
     .version(packageJson.version, `-v, --version`, `output the current version`)
     .option(
         `-o --output <path>`,
-        `번역 파일들이 저장될 경로 및 파일명. 변수 \`column\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`./i18n/[column]\`, \`./i18n/[sheet_name]/[column]\``,
-        `./translations/[column]`
+        `번역 파일들이 저장될 경로 및 파일명. 변수 \`lang\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`./i18n/[lang]\`, \`./i18n/[sheet_name]/[lang]\``,
+        `./translations/[lang]`
     )
     .option(
         `--output-format <format>`,
@@ -35,6 +35,11 @@ program
         `변환을 시도할 시트명. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`Sheet 1\`, \`Sheet 2\` glob 패턴을 지원합니다. ex) \`Sheet*\``,
         `*`
     )
+    .option(
+        `--key-format <format>`,
+        `key 포맷입니다. 변수 \`key\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`[key]\`, \`[sheet_name].[key]\``,
+        `[key]`
+    )
     .option(`--input <path>`, `\`xlsx\`, csv 파일 허용. ex) \`./i18n.xlsx\``)
     .option(
         `--spreadsheet-id <id>`,
@@ -50,19 +55,21 @@ program
         `Google Sheets API token 파일의 경로. 최초 실행시 생성되고 이후는 재사용할 수 있습니다.`,
         `./token.json`
     )
-    .option(
-        `--key-format <format>`,
-        `key 포맷입니다. 변수 \`key\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`[key]\`, \`[sheet_name].[key]\``,
-        `[key]`
-    )
     .action(async (option: CommandOption) => {
         try {
             if (option.spreadsheetId) {
-                await SpreadsheetParser.parse({
+                const data = await new SpreadsheetParser({
                     sheetId: option.spreadsheetId,
                     credentialsPath: option.googleCredentials,
                     tokenPath: option.googleToken,
+                }).parse({
+                    includeSheets: option.includeSheets,
+                    keyFormat: option.keyFormat,
+                    excludeColumns: option.excludeColumns,
+                    excludeKeys: option.excludeKeys,
                 })
+
+                console.log(data)
                 return
             }
 

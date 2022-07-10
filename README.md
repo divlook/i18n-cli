@@ -4,7 +4,7 @@
 
 ```bash
 npm install @divlook/i18n-cli
-npx divlook-i18n
+npx divlook-i18n --spreadsheet-id=175B6ymwH8MtaLMDCxVQ4Ifjpar4XZBrRkTDSB_ud_b8
 ```
 
 ## Develop guide

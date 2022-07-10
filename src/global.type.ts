@@ -11,9 +11,25 @@ export interface CommandOption {
     excludeColumns?: string
     excludeKeys?: string
     includeSheets: string
+    keyFormat: string
     input?: string
     spreadsheetId?: string
     googleCredentials?: string
     googleToken?: string
-    keyFormat: string
+}
+
+export type ParseOption = Pick<
+    CommandOption,
+    | 'excludeColumns' //
+    | 'excludeKeys'
+    | 'includeSheets'
+    | 'keyFormat'
+>
+
+export interface ParsedData {
+    [lang: string]: {
+        [sheetName: string]: {
+            [key: string]: string
+        }
+    }
 }
