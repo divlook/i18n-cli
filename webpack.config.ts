@@ -16,6 +16,7 @@ const config: Configuration = {
             'glob',
             'minimatch',
             'merge',
+            'xlsx',
         ],
     },
     output: {
