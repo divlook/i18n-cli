@@ -1,8 +1,9 @@
 import { program } from 'commander'
 import packageJson from '~/package.json'
 import { CommandOption, OutputFormatEnum } from '@/global.type'
-import { checkFileExt, UserError } from '@/utils/global-lib'
+import { UserError } from '@/utils/global-lib'
 import { SpreadsheetParser } from '@/parser/spreadsheet-parser'
+import { XlsxParser } from '@/parser/xlsx-parser'
 
 program
     .name(`divlook-i18n`)
@@ -74,24 +75,14 @@ program
             }
 
             if (option.input) {
-                const ext = checkFileExt(option.input)
-
-                if (!ext.isSupported) {
-                    program.error(`지원되지 않는 포맷의 파일입니다.`)
-                }
-
-                switch (ext.name) {
-                    case 'xlsx': {
-                        //
-                        break
-                    }
-
-                    case 'csv': {
-                        //
-                        break
-                    }
-                }
-
+                new XlsxParser({
+                    input: option.input,
+                }).parse({
+                    includeSheets: option.includeSheets,
+                    keyFormat: option.keyFormat,
+                    excludeColumns: option.excludeColumns,
+                    excludeKeys: option.excludeKeys,
+                })
                 return
             }
 
