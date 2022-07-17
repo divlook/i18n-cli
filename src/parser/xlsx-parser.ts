@@ -5,6 +5,7 @@ import { ParsedData, ParseOption } from '@/global.type'
 import { XlsxParserOption } from '@/parser/xlsx-parser.type'
 import {
     checkFileExt,
+    makeKey,
     textFilter,
     UserError,
     workdir,
@@ -86,6 +87,12 @@ export class XlsxParser {
                     return
                 }
 
+                const outputKey = makeKey({
+                    key,
+                    sheetName,
+                    keyFormat: option.keyFormat,
+                })
+
                 for (const lang of allowedHeadSet) {
                     if (lang === 'key') {
                         continue
@@ -99,9 +106,9 @@ export class XlsxParser {
 
                     parsedData[lang] ??= {}
                     parsedData[lang][sheetName] ??= {}
-                    parsedData[lang][sheetName][key] ||= text
+                    parsedData[lang][sheetName][outputKey] ||= text
 
-                    if (!parsedData[lang][sheetName][key]) {
+                    if (!parsedData[lang][sheetName][outputKey]) {
                         throw new UserError(`'${sheetName}'시트의 ${lang}:${rowIndex + 2} 값이 누락되었습니다.`) // prettier-ignore
                     }
                 }

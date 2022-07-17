@@ -67,3 +67,27 @@ export function textFilter(
         return !isInclude
     })
 }
+
+export function makeKey({
+    key,
+    sheetName,
+    keyFormat,
+}: {
+    key: string
+    sheetName: string
+    keyFormat: string
+}) {
+    let result = key
+
+    if (keyFormat) {
+        if (key) {
+            result = keyFormat.replaceAll(`[key]`, key)
+        }
+
+        if (sheetName) {
+            result = keyFormat.replaceAll(`[sheetName]`, sheetName)
+        }
+    }
+
+    return result
+}
