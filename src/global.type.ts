@@ -12,6 +12,7 @@ export interface CommandOption {
     excludeKeys?: string
     includeSheets: string
     keyFormat: string
+    groupBySheet: boolean
     input?: string
     spreadsheetId?: string
     googleCredentials?: string

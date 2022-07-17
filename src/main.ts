@@ -41,6 +41,11 @@ program
         `key 포맷입니다. 변수 \`key\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`[key]\`, \`[sheet_name].[key]\``,
         `[key]`
     )
+    .option(
+        `--group-by-sheet`,
+        `이 값이 true인 경우 key를 sheet 단위로 묶어서 출력합니다.`,
+        false
+    )
     .option(`--input <path>`, `\`xlsx\`, csv 파일 허용. ex) \`./i18n.xlsx\``)
     .option(
         `--spreadsheet-id <id>`,
