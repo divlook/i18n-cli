@@ -75,7 +75,7 @@ program
             }
 
             if (option.input) {
-                new XlsxParser({
+                const data = await new XlsxParser({
                     input: option.input,
                 }).parse({
                     includeSheets: option.includeSheets,
@@ -83,6 +83,8 @@ program
                     excludeColumns: option.excludeColumns,
                     excludeKeys: option.excludeKeys,
                 })
+
+                console.log(data)
                 return
             }
 

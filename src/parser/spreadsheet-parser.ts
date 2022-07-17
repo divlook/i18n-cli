@@ -60,7 +60,7 @@ export class SpreadsheetParser {
                     const key = cols[0]
 
                     if (!key) {
-                        throw new UserError(`'${sheetName}'시트의 ${rowIndex + 1}번째 줄 'key'가 누락되었습니다.`) // prettier-ignore
+                        throw new UserError(`'${sheetName}'시트의 ${rowIndex + 2}번째 줄 'key'가 누락되었습니다.`) // prettier-ignore
                     }
 
                     if (!textFilter(key, option.excludeKeys, false).length) {
@@ -80,7 +80,7 @@ export class SpreadsheetParser {
                         parsedData[lang][sheetName][key] ||= text
 
                         if (!parsedData[lang][sheetName][key]) {
-                            throw new UserError(`'${sheetName}'시트의 ${lang}:${rowIndex + 1} 값이 누락되었습니다.`) // prettier-ignore
+                            throw new UserError(`'${sheetName}'시트의 ${lang}:${rowIndex + 2} 값이 누락되었습니다.`) // prettier-ignore
                         }
                     }
                 })

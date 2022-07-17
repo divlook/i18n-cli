@@ -1,8 +1,14 @@
 import fs from 'fs'
 import * as XLSX from 'xlsx'
+import merge from 'merge'
 import { ParsedData, ParseOption } from '@/global.type'
 import { XlsxParserOption } from '@/parser/xlsx-parser.type'
-import { checkFileExt, UserError, workdir } from '@/utils/global-lib'
+import {
+    checkFileExt,
+    textFilter,
+    UserError,
+    workdir,
+} from '@/utils/global-lib'
 
 export class XlsxParser {
     filePath
@@ -26,24 +32,39 @@ export class XlsxParser {
     }
 
     async parse(option: ParseOption): Promise<ParsedData> {
-        // npm run exec -- --input="./i18n-cli spreadsheet sample.xlsx"
-
         const buffer = fs.readFileSync(this.filePath)
         const wb = XLSX.read(buffer)
 
-        for (const sheetName of wb.SheetNames) {
+        const sheetNames = textFilter(wb.SheetNames, option.includeSheets)
+
+        const result: ParsedData[] = []
+
+        for (const sheetName of sheetNames) {
+            const parsedData: ParsedData = {}
+
             const ws = wb.Sheets[sheetName]
+            const range = XLSX.utils.decode_range(ws['!ref'] || 'A1:Z1')
+            const headRange = XLSX.utils.encode_range({
+                s: {
+                    r: range.s.r,
+                    c: range.s.c,
+                },
+                e: {
+                    c: range.e.c,
+                    r: range.s.r,
+                },
+            })
 
-            console.log(sheetName)
+            const head = XLSX.utils.sheet_to_json<string[]>(ws, {
+                header: 1,
+                range: headRange,
+            })[0]
 
-            // 엑셀파서에서는 head가 필요없을 수 있겠군
-            // const head = XLSX.utils.sheet_to_json(ws, {
-            //     header: 1,
-            //     range: 'A1:Z1',
-            // })[0]
-            // console.log(head)
+            const allowedHeadSet = new Set(
+                textFilter(head, option.excludeColumns, false)
+            )
 
-            const rows = XLSX.utils.sheet_to_json(ws)
+            const rows = XLSX.utils.sheet_to_json<Record<string, string>>(ws)
 
             // csv는 인코딩 변환
             if (this.extName === 'csv') {
@@ -54,9 +75,41 @@ export class XlsxParser {
                 rows.splice(0, rows.length, ...nextJson)
             }
 
-            console.log(rows)
+            rows.forEach((row, rowIndex) => {
+                const key = row['key']
+
+                if (!key) {
+                    throw new UserError(`'${sheetName}'시트의 ${rowIndex + 2}번째 줄 'key'가 누락되었습니다.`) // prettier-ignore
+                }
+
+                if (!textFilter(key, option.excludeKeys, false).length) {
+                    return
+                }
+
+                for (const lang of allowedHeadSet) {
+                    if (lang === 'key') {
+                        continue
+                    }
+
+                    const text = row[lang] || ''
+
+                    if (!lang) {
+                        continue
+                    }
+
+                    parsedData[lang] ??= {}
+                    parsedData[lang][sheetName] ??= {}
+                    parsedData[lang][sheetName][key] ||= text
+
+                    if (!parsedData[lang][sheetName][key]) {
+                        throw new UserError(`'${sheetName}'시트의 ${lang}:${rowIndex + 2} 값이 누락되었습니다.`) // prettier-ignore
+                    }
+                }
+            })
+
+            result.push(parsedData)
         }
 
-        return {} // TODO:
+        return merge.recursive(...result)
     }
 }
