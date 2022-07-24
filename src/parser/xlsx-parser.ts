@@ -91,7 +91,7 @@ export class XlsxParser {
                         continue
                     }
 
-                    const text = row[lang] || ''
+                    const text = String(row[lang] || '')
 
                     if (!lang) {
                         continue

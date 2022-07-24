@@ -69,7 +69,7 @@ export class SpreadsheetParser {
 
                     for (let colIndex = 1; colIndex < cols.length; colIndex++) {
                         const lang = allowedHeadIndexMap.get(colIndex)
-                        const text = cols[colIndex] || ''
+                        const text = String(cols[colIndex] || '')
 
                         if (!lang) {
                             continue
