@@ -4,13 +4,14 @@
         "target": "ESNext",
         "moduleResolution": "Node",
         "esModuleInterop": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
-            "~/*": [
-                "./*"
-            ],
             "@/*": [
                 "./src/*"
+            ],
+            "~/*": [
+                "./*"
             ]
         }
     }

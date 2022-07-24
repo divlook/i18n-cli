@@ -1,2 +1,9 @@
 node_modules
+
+# output
 dist
+translations
+
+# google
+credentials.json
+token.json
