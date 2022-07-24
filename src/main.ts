@@ -1,9 +1,10 @@
 import { program } from 'commander'
 import packageJson from '~/package.json'
-import { CommandOption, OutputFormatEnum } from '@/global.type'
+import { CommandOption, OutputFormatEnum, ParsedData } from '@/global.type'
 import { UserError } from '@/utils/global-lib'
 import { SpreadsheetParser } from '@/parser/spreadsheet-parser'
 import { XlsxParser } from '@/parser/xlsx-parser'
+import { FileMaker } from '@/utils/file-maker'
 
 program
     .name(`divlook-i18n`)
@@ -58,8 +59,16 @@ program
     )
     .action(async (option: CommandOption) => {
         try {
+            let data: ParsedData | null = null
+
+            if (!option.spreadsheetId && !option.input) {
+                program.error(
+                    `\`--spreadsheet-id\`, \`--input\` 옵션 중 하나는 필수로 입력이 필요합니다.`
+                )
+            }
+
             if (option.spreadsheetId) {
-                const data = await new SpreadsheetParser({
+                data = await new SpreadsheetParser({
                     sheetId: option.spreadsheetId,
                     credentialsPath: option.googleCredentials,
                     tokenPath: option.googleToken,
@@ -68,27 +77,26 @@ program
                     excludeColumns: option.excludeColumns,
                     excludeKeys: option.excludeKeys,
                 })
-
-                console.log(data)
-                return
             }
 
             if (option.input) {
-                const data = await new XlsxParser({
+                data = await new XlsxParser({
                     input: option.input,
                 }).parse({
                     includeSheets: option.includeSheets,
                     excludeColumns: option.excludeColumns,
                     excludeKeys: option.excludeKeys,
                 })
-
-                console.log(data)
-                return
             }
 
-            program.error(
-                `\`--spreadsheet-id\`, \`--input\` 옵션 중 하나는 필수로 입력이 필요합니다.`
-            )
+            if (data) {
+                new FileMaker(data, {
+                    clean: option.clean,
+                    output: option.output,
+                    outputFormat: option.outputFormat,
+                    saveEachSheet: option.saveEachSheet,
+                })
+            }
         } catch (error) {
             if (error instanceof UserError && error.message) {
                 program.error(error.message)
@@ -103,5 +111,3 @@ program
     })
 
 program.parse(process.argv)
-
-// const options = program.opts()

@@ -5,4 +5,5 @@ export type FileMakerOption = Pick<
     | 'output' //
     | 'outputFormat'
     | 'clean'
+    | 'saveEachSheet'
 >
