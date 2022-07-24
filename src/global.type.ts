@@ -11,8 +11,7 @@ export interface CommandOption {
     excludeColumns?: string
     excludeKeys?: string
     includeSheets: string
-    keyFormat: string
-    groupBySheet: boolean
+    saveEachSheet: boolean
     input?: string
     spreadsheetId?: string
     googleCredentials?: string
@@ -24,7 +23,6 @@ export type ParseOption = Pick<
     | 'excludeColumns' //
     | 'excludeKeys'
     | 'includeSheets'
-    | 'keyFormat'
 >
 
 export interface ParsedData {

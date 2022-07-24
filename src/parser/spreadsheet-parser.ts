@@ -3,7 +3,7 @@ import { sheets } from '@googleapis/sheets'
 import { SpreadsheetParserOption } from '@/parser/spreadsheet-parser.type'
 import { GoogleAuth } from '@/utils/google-auth'
 import { ParsedData, ParseOption } from '@/global.type'
-import { makeKey, textFilter, UserError } from '@/utils/global-lib'
+import { textFilter, UserError } from '@/utils/global-lib'
 
 export class SpreadsheetParser {
     #sheets
@@ -67,12 +67,6 @@ export class SpreadsheetParser {
                         return
                     }
 
-                    const outputKey = makeKey({
-                        key,
-                        sheetName,
-                        keyFormat: option.keyFormat,
-                    })
-
                     for (let colIndex = 1; colIndex < cols.length; colIndex++) {
                         const lang = allowedHeadIndexMap.get(colIndex)
                         const text = cols[colIndex] || ''
@@ -83,9 +77,9 @@ export class SpreadsheetParser {
 
                         parsedData[lang] ??= {}
                         parsedData[lang][sheetName] ??= {}
-                        parsedData[lang][sheetName][outputKey] ||= text
+                        parsedData[lang][sheetName][key] ||= text
 
-                        if (!parsedData[lang][sheetName][outputKey]) {
+                        if (!parsedData[lang][sheetName][key]) {
                             throw new UserError(`'${sheetName}'시트의 ${lang}:${rowIndex + 2} 값이 누락되었습니다.`) // prettier-ignore
                         }
                     }

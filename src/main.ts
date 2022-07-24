@@ -10,8 +10,8 @@ program
     .version(packageJson.version, `-v, --version`, `output the current version`)
     .option(
         `-o --output <path>`,
-        `번역 파일들이 저장될 경로 및 파일명. 변수 \`lang\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`./i18n/[lang]\`, \`./i18n/[sheet_name]/[lang]\``,
-        `./translations/[lang]`
+        `번역 파일들이 저장될 경로.`,
+        `./translations`
     )
     .option(
         `--output-format <format>`,
@@ -37,13 +37,8 @@ program
         `*`
     )
     .option(
-        `--key-format <format>`,
-        `key 포맷입니다. 변수 \`key\`, \`sheet_name\`을 사용할 수 있습니다. ex) \`[key]\`, \`[sheet_name].[key]\``,
-        `[key]`
-    )
-    .option(
-        `--group-by-sheet`,
-        `이 값이 true인 경우 key를 sheet 단위로 묶어서 출력합니다.`,
+        `--save-each-sheet`,
+        `이 값이 true인 경우 Sheet별로 각각 저장합니다. 기본적으로 1개의 파일에 저장합니다.`,
         false
     )
     .option(`--input <path>`, `\`xlsx\`, csv 파일 허용. ex) \`./i18n.xlsx\``)
@@ -70,7 +65,6 @@ program
                     tokenPath: option.googleToken,
                 }).parse({
                     includeSheets: option.includeSheets,
-                    keyFormat: option.keyFormat,
                     excludeColumns: option.excludeColumns,
                     excludeKeys: option.excludeKeys,
                 })
@@ -84,7 +78,6 @@ program
                     input: option.input,
                 }).parse({
                     includeSheets: option.includeSheets,
-                    keyFormat: option.keyFormat,
                     excludeColumns: option.excludeColumns,
                     excludeKeys: option.excludeKeys,
                 })
