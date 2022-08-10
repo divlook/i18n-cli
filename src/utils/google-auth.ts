@@ -132,9 +132,12 @@ export class GoogleAuth {
     }
 
     static #getOAuth2Client(credentials: Credentials) {
-        const { client_secret, client_id, redirect_uris } =
-            credentials.installed
+        const { client_secret, client_id } = credentials.installed
 
-        return new auth.OAuth2(client_id, client_secret, redirect_uris[0])
+        return new auth.OAuth2(
+            client_id,
+            client_secret,
+            'https://divlook.github.io/i18n-cli'
+        )
     }
 }
