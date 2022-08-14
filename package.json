@@ -1,5 +1,5 @@
 {
-  "name": "i18n-cli",
+  "name": "@divlook/i18n-cli",
   "version": "0.1.0",
   "description": "i18n CLI",
   "repository": {
