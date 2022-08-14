@@ -1,5 +1,23 @@
 # i18n CLI
 
+## Install
+
+### Via NPM registry
+
+- [Link to download](https://www.npmjs.com/package/@divlook/i18n-cli)
+
+```bash
+$ npm install @divlook/i18n-cli
+```
+
+### Via GitHub Packages registry
+
+- [Link to download](https://github.com/divlook/i18n-cli/pkgs/npm/i18n-cli)
+
+```bash
+$ npm install @divlook/i18n-cli --registry=https://npm.pkg.github.com
+```
+
 ## Usage
 
 ### Download sample spreadsheet
@@ -9,14 +27,12 @@
 ### Via spreadsheet
 
 ```bash
-$ npm install @divlook/i18n-cli
 $ npx divlook-i18n --spreadsheet-id=175B6ymwH8MtaLMDCxVQ4Ifjpar4XZBrRkTDSB_ud_b8
 ```
 
 ### Via excel
 
 ```bash
-$ npm install @divlook/i18n-cli
 $ npx divlook-i18n --input=./i18n.xlsx
 ```
 
