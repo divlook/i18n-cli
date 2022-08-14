@@ -1,0 +1,28 @@
+# 1.0.0 (2022-08-14)
+
+
+### Features
+
+* :tada: 개발 환경 설정 ([a4554ca](https://github.com/divlook/i18n-cli/commit/a4554cae813dd4bc8a806d6681412f5f657944d6))
+* @googleapis/sheets 패키지 vendors에 추가 ([52dbc1d](https://github.com/divlook/i18n-cli/commit/52dbc1d75e70652acdae81e530d1569c43bdae14))
+* @googleapis/sheets 패키지 추가 ([028b92d](https://github.com/divlook/i18n-cli/commit/028b92dc1e097f9fb2083d2777003f1e377970dd))
+* cli option 구현 ([00ef036](https://github.com/divlook/i18n-cli/commit/00ef036bd15bbbe9c346744e8eb59dc339339fb4))
+* CLI 액션 추가 ([7b3db8d](https://github.com/divlook/i18n-cli/commit/7b3db8deaa8cb193f8aa98bfb2df8cd60487e8da))
+* CLI 옵션 수정 ([47e7d82](https://github.com/divlook/i18n-cli/commit/47e7d829c30fbf1d2f033d833e5da4050832e581))
+* cli 코드 추가 ([bd828ed](https://github.com/divlook/i18n-cli/commit/bd828ede5b32fcbc18d2b15ade83759c5e96cc07))
+* gitignore에 google 관련 파일, output 경로 추가 ([ecad187](https://github.com/divlook/i18n-cli/commit/ecad187179403ae1dd85bd84e37fc5d152353225))
+* groupBySheet 옵션 추가 ([4d5ae1b](https://github.com/divlook/i18n-cli/commit/4d5ae1b7750999981cc21bf3d57d480eb29477f4))
+* html 파일 위치 이동 ([2177808](https://github.com/divlook/i18n-cli/commit/2177808ef89385405288b02c0363c35f42676941))
+* npm install xlsx ([2e3c8a2](https://github.com/divlook/i18n-cli/commit/2e3c8a2a6be546260fccf36b55803004e0c515c5))
+* output key 변환 ([191c0be](https://github.com/divlook/i18n-cli/commit/191c0be17aa6d5511146cce8bfb0d21f91f297cb))
+* redirect url 변경 ([148b6c5](https://github.com/divlook/i18n-cli/commit/148b6c5474c316118dffe5dfb8e4dff5a75717e7))
+* xlsx parser 완료 ([58a2412](https://github.com/divlook/i18n-cli/commit/58a2412e733ad589b1369de5f87737aeb6a9178c))
+* 구글 인증까지 구현 ([ca34b30](https://github.com/divlook/i18n-cli/commit/ca34b302b7cf97ddb9fb9d0d9ce021c74ed0dd96))
+* 스프레드시트 파서 구현 ([c814860](https://github.com/divlook/i18n-cli/commit/c814860835db905aad662aff5120488654c1d97b))
+* 엑셀 파서 작업 중 ([af485d1](https://github.com/divlook/i18n-cli/commit/af485d1f59b7c8cade0fde9965dd08eb94129515))
+* 외부 패키지 output에서 분리 ([62b6fcd](https://github.com/divlook/i18n-cli/commit/62b6fcdc4df7eac44615a1dcfa76f50667ded4f0))
+* 인증을 위한 html 파일 추가 ([81493a1](https://github.com/divlook/i18n-cli/commit/81493a1777ff91067b8c9233bf7c65c91520ef56))
+* 커맨드 옵션 인터페이스 추가 ([e30e117](https://github.com/divlook/i18n-cli/commit/e30e1176743c37ee9d4290edcef5aac25cb0b3a1))
+* 파일시스템 구현 ([8652469](https://github.com/divlook/i18n-cli/commit/8652469703d3acb582cb6b2f41cb18e7ee92fa68))
+* 패키지명에 [@divlook](https://github.com/divlook) scope 추가 ([837f690](https://github.com/divlook/i18n-cli/commit/837f6905f8ee59d658c52ea0c96b6bb400e18a5e))
+* 필요한 파일 추가 및 간단하게 코드 추가 ([3779817](https://github.com/divlook/i18n-cli/commit/37798170ed5c1815aacb94bef3ec1468c83d4329))
