@@ -1,0 +1,65 @@
+name: pkg-publish
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: dist
+          key: ${{ github.sha }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          registry-url: https://registry.npmjs.org/
+      - uses: actions/cache@v3
+        with:
+          path: dist
+          key: ${{ github.sha }}
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          registry-url: https://npm.pkg.github.com/
+      - uses: actions/cache@v3
+        with:
+          path: dist
+          key: ${{ github.sha }}
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
