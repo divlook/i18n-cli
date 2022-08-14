@@ -15,8 +15,8 @@ program
         `./translations`
     )
     .option(
-        `--output-format <format>`,
-        `지원되는 포맷 : ${OutputFormatEnum.Json}`,
+        `--output-format <${OutputFormatEnum.Json}>`,
+        `지원되는 포맷`,
         OutputFormatEnum.Json
     )
     .option(
@@ -26,15 +26,15 @@ program
     )
     .option(
         `--exclude-columns <columns>`,
-        `결과물에서 제외시킬 컬럼명. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`desc\`, \`memo\` glob 패턴을 지원합니다. ex) \`ignore-*\``
+        `결과물에서 제외시킬 컬럼명. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`desc\`, \`memo\`. glob 패턴을 지원합니다. ex) \`ignore-*\``
     )
     .option(
         `--exclude-keys <keys>`,
-        `결과물에서 제외시킬 key. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`key1\`, \`key2\` glob 패턴을 지원합니다. ex) \`ignore-*\``
+        `결과물에서 제외시킬 key. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`key1\`, \`key2\`. glob 패턴을 지원합니다. ex) \`ignore-*\``
     )
     .option(
         `--include-sheets <sheets>`,
-        `변환을 시도할 시트명. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`Sheet 1\`, \`Sheet 2\` glob 패턴을 지원합니다. ex) \`Sheet*\``,
+        `변환을 시도할 시트명. \`,\`를 사용하여 복수로 입력할 수 있습니다. ex) \`Sheet 1\`, \`Sheet 2\`. glob 패턴을 지원합니다. ex) \`Sheet*\``,
         `*`
     )
     .option(
