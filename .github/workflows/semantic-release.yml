@@ -1,0 +1,51 @@
+name: Semantic Release
+
+on:
+  # push:
+  #   branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      - name: install
+        run: |
+          npm install \
+            semantic-release \
+            @semantic-release/changelog \
+            @semantic-release/git \
+            --no-save
+      - name: create .releaserc.json
+        run: |
+          cat <<EOT > .releaserc.json
+          {
+              "plugins": [
+                  ["@semantic-release/commit-analyzer", {
+                    "preset": "angular",
+                    "releaseRules": [
+                      {"type": "docs", "release": "patch"},
+                      {"type": "refactor", "release": "patch"}
+                    ]
+                  }],
+                  "@semantic-release/release-notes-generator",
+                  "@semantic-release/changelog",
+                  ["@semantic-release/npm", {
+                    "npmPublish": false
+                  }],
+                  "@semantic-release/git",
+                  "@semantic-release/github"
+              ],
+              "branches": "main"
+          }
+          EOT
+      - name: semantic release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
