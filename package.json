@@ -19,6 +19,9 @@
     "divlook-i18n": "./dist/i18n-cli.js"
   },
   "main": "./dist/i18n-cli.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "webpack",
     "exec": "npm run build && node ./dist/i18n-cli.js",
